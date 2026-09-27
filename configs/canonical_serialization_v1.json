@@ -1,0 +1,42 @@
+{
+  "action_delta_tcp_task": {
+    "ordering": ["dx_m", "dy_m", "dz_m", "drx_rad", "dry_rad", "drz_rad"],
+    "translation_frame": "task",
+    "rotation_frame": "task",
+    "rotation_representation": "axis-angle rotation vector"
+  },
+  "contact": {
+    "active_criterion": "any raw contact record has normal_force_N > 1e-4",
+    "environment_on_peg": true,
+    "normal_force_epsilon_N": 0.0001
+  },
+  "diagnostic_metadata": {
+    "full_rotation_matrix_recommended_near_pi": true,
+    "raw_contact_points_model_input": false,
+    "robot_identity_model_input": false
+  },
+  "frames": {
+    "task_axis_convention": "+Z points out of the hole toward the approaching robot; +X/+Y are the square-hole lateral axes; right-handed",
+    "task_origin": "hole center / reference semantic TCP origin used by the experiment",
+    "tcp": "semantic peg tip",
+    "wrench_expression": "task frame",
+    "wrench_reference": "semantic TCP origin"
+  },
+  "schema_sha256": "7da0a541741de01d7f3487db6790208adfe77dd053a3a2dd52ddd8512c1956dd",
+  "schema_version": "canonical_iwm.branch.v1",
+  "T_task_TCP": {
+    "ordering": ["x_m", "y_m", "z_m", "rx_rad", "ry_rad", "rz_rad"],
+    "rotation_representation": "principal axis-angle rotation vector, norm in [0, pi]",
+    "units": ["m", "m", "m", "rad", "rad", "rad"]
+  },
+  "tcp_twist_task": {
+    "ordering": ["vx_m_s", "vy_m_s", "vz_m_s", "wx_rad_s", "wy_rad_s", "wz_rad_s"],
+    "reference": "semantic TCP",
+    "units": ["m/s", "m/s", "m/s", "rad/s", "rad/s", "rad/s"]
+  },
+  "wrench_task_at_tcp": {
+    "ordering": ["Fx_N", "Fy_N", "Fz_N", "Mx_Nm", "My_Nm", "Mz_Nm"],
+    "sign": "environment-on-peg",
+    "units": ["N", "N", "N", "N*m", "N*m", "N*m"]
+  }
+}

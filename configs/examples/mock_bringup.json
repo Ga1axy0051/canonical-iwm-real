@@ -1,0 +1,6 @@
+{
+  "robot": "mock",
+  "T_world_task": [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]],
+  "T_eef_tcp": [[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0.08], [0, 0, 0, 1]],
+  "note": "Example only; the 0.08 m offset is simulation evidence, not a real-tool calibration."
+}

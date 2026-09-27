@@ -1,0 +1,162 @@
+{
+  "$defs": {
+    "canonical_state": {
+      "additionalProperties": false,
+      "description": "Shared model input: canonical quantities only; no robot identity or raw contact points.",
+      "properties": {
+        "T_task_TCP": {
+          "$ref": "#/$defs/vector6"
+        },
+        "in_contact": {
+          "type": "boolean"
+        },
+        "t": {
+          "type": "number"
+        },
+        "tcp_twist_task": {
+          "$ref": "#/$defs/vector6"
+        },
+        "wrench_task_at_tcp": {
+          "$ref": "#/$defs/vector6"
+        }
+      },
+      "required": [
+        "t",
+        "T_task_TCP",
+        "tcp_twist_task",
+        "wrench_task_at_tcp",
+        "in_contact"
+      ],
+      "type": "object"
+    },
+    "vector6": {
+      "items": {
+        "type": "number"
+      },
+      "maxItems": 6,
+      "minItems": 6,
+      "type": "array"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "branch_state": {
+      "$ref": "#/$defs/canonical_state"
+    },
+    "candidates": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "action_delta_tcp_task": {
+            "$ref": "#/$defs/vector6"
+          },
+          "consequences": {
+            "properties": {
+              "contact_release": {
+                "type": "boolean"
+              },
+              "force_impulse_Ns": {
+                "type": "number"
+              },
+              "insertion_progress_m": {
+                "type": "number"
+              },
+              "peak_lateral_force_N": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "peak_lateral_force_N",
+              "force_impulse_Ns",
+              "insertion_progress_m",
+              "contact_release"
+            ],
+            "type": "object"
+          },
+          "horizon_s": {
+            "maximum": 0.3,
+            "minimum": 0.05,
+            "type": "number"
+          },
+          "samples": {
+            "items": {
+              "$ref": "#/$defs/canonical_state"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "action_delta_tcp_task",
+          "horizon_s",
+          "samples",
+          "consequences"
+        ],
+        "type": "object"
+      },
+      "maxItems": 8,
+      "minItems": 8,
+      "type": "array"
+    },
+    "frames": {
+      "const": {
+        "task_frame": "hole_center_z_out",
+        "tcp_frame": "semantic_peg_tip",
+        "wrench_expression": "task_frame",
+        "wrench_reference": "tcp_origin"
+      }
+    },
+    "metadata": {
+      "additionalProperties": true,
+      "description": "Non-model-input provenance. Robot identity and raw contacts may appear only here.",
+      "properties": {
+        "controller_contract_id": {
+          "type": "string"
+        },
+        "raw_contact_points": {
+          "items": {
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "robot_identity": {
+          "enum": [
+            "ur5",
+            "franka",
+            "xarm6"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "robot_identity",
+        "controller_contract_id"
+      ],
+      "type": "object"
+    },
+    "schema_version": {
+      "const": "canonical_iwm.branch.v1"
+    },
+    "units": {
+      "const": {
+        "angular_velocity": "rad/s",
+        "force": "N",
+        "linear_velocity": "m/s",
+        "position": "m",
+        "rotation": "rad",
+        "time": "s",
+        "torque": "N*m"
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "units",
+    "frames",
+    "metadata",
+    "branch_state",
+    "candidates"
+  ],
+  "title": "Canonical IWM branch sample v1",
+  "type": "object"
+}
